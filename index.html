@@ -1,4 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raihan V - Official</title>
+<style>
+body{font-family:sans-serif;text-align:center;background:#f5f5f5;padding:20px;margin:0}
+.card{background:white;padding:30px;border-radius:20px;max-width:380px;margin:30px auto;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+.btn{display:block;background:black;color:white;padding:15px;margin:12px 0;border-radius:30px;text-decoration:none;font-weight:bold;border:none;width:100%;cursor:pointer}
+.btn-fb{background:#1877F2}.btn-yt{background:#FF0000}.btn-wa{background:#25D366}.btn-google{background:#4285F4}
+#insideContent{display:none}
+#userPhoto{border-radius:50%;width:70px;margin:10px auto;display:block}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Hi, I'm Raihan V 🚀</h1>
+<p>Welcome to my official website</p>
 
+<!-- বাইরের অংশ - Login এর আগে দেখাবে -->
+<div id="outsideContent">
+<button class="btn btn-google" onclick="googleLogin()">🔐 Google দিয়ে Login করুন</button>
+<p style="font-size:14px;color:#666;">ভিতরে ঢুকতে Login করুন</p>
+</div>
+
+<!-- ভিতরের অংশ - Login এর পরে দেখাবে -->
+<div id="insideContent">
+<img id="userPhoto" src="">
+<p id="userInfo" style="color:green;font-weight:bold;margin-top:15px;"></p>
+<p id="userEmail" style="color:#333;"></p>
+<a class="btn" href="#">📥 Download My App</a>
+<a class="btn btn-fb" href="#">Facebook</a>
+<a class="btn btn-yt" href="#">YouTube</a>
+<a class="btn btn-wa" href="#">WhatsApp</a>
+<button class="btn" style="background:#ff3b3b" onclick="googleLogout()">Logout</button>
+</div>
+
+<p style="color:#888;font-size:13px;">© 2026 Raihan V</p>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig={apiKey:"AIzaSyCmElkJZ27WNuNUdfCAPdaAYlP183pckZM",authDomain:"raihanv372-7bfaf.firebaseapp.com",projectId:"raihanv372-7bfaf",storageBucket:"raihanv372-7bfaf.firebasestorage.app",messagingSenderId:"795128285256",appId:"1:795128285256:web:136862bbad15bf6651707d"};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const provider=new GoogleAuthProvider();
+
+window.googleLogin=()=>{
+  signInWithPopup(auth,provider).catch(e=>alert(e.message))
+};
+
+window.googleLogout=()=>{
+  signOut(auth);
+};
+
+// এইটা হলো আসল জাদু - Login হলে ভিতরে ঢুকাবে
+onAuthStateChanged(auth, (user)=>{
+  if(user){
+    document.getElementById("outsideContent").style.display="none";
+    document.getElementById("insideContent").style.display="block";
+    document.getElementById("userInfo").innerText="স্বাগতম "+user.displayName+" ❤️";
+    document.getElementById("userEmail").innerText=user.email;
+    document.getElementById("userPhoto").src=user.photoURL;
+  } else {
+    document.getElementById("outsideContent").style.display="block";
+    document.getElementById("insideContent").style.display="none";
+  }
+});
+</script>
+</body>
+</html>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +103,4 @@ const firebaseConfig={apiKey:"AIzaSyCmElkJZ27WNuNUdfCAPdaAYlP183pckZM",authDomai
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const provider=new GoogleAuthProvider();
-window.googleLogin=()=>{signInWithPopup(auth,provider).then(r=>{document.getElementById("userInfo").innerText="স্বাগতম "+r.user.displayName+" ❤️";alert("Login সফল! "+r.user.email)}).catch(e=>alert(e.message))};
-</script>
-</body>
-</html>
+window.googleLogin=()=>{signInWithPopup(auth,provider).then(r=>{document.getElementById("userInfo").innerText="স্বাগতম "+r.user.displayName+" ❤️";alert("Login সফল! "+r.user.email)}).catch(e=>alert(e.
