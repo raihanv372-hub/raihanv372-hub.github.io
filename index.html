@@ -1,75 +1,73 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Raihan V - Official</title>
 <style>
-body{font-family:sans-serif;text-align:center;background:#f5f5f5;padding:20px;margin:0}
-.card{background:white;padding:30px;border-radius:20px;max-width:380px;margin:30px auto;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
-.btn{display:block;background:black;color:white;padding:15px;margin:12px 0;border-radius:30px;text-decoration:none;font-weight:bold;border:none;width:100%;cursor:pointer}
-.btn-fb{background:#1877F2}.btn-yt{background:#FF0000}.btn-wa{background:#25D366}.btn-google{background:#4285F4}
-#insideContent{display:none}
-#userPhoto{border-radius:50%;width:70px;margin:10px auto;display:block}
+body{background:#f0f2f5;font-family:sans-serif;margin:0;padding:15px;display:flex;justify-content:center}
+.box{background:#fff;width:100%;max-width:380px;padding:20px;border-radius:20px;box-shadow:0 4px 15px #ccc;text-align:center}
+.btn{width:100%;padding:12px;margin:6px 0;border:none;border-radius:25px;color:#fff;font-weight:bold;cursor:pointer}
+.r{background:#ff0000}.b{background:#1877f2}.g{background:#25D366}.black{background:#000}
+.card{background:#f9f9f9;padding:12px;border-radius:12px;margin-top:12px;text-align:left}
+.coin{font-size:24px;color:green;text-align:center;font-weight:bold}
+.task{display:flex;justify-content:space-between;background:#fff;padding:8px;border-radius:8px;margin:5px 0;border-left:4px solid orange}
 </style>
 </head>
 <body>
+<div class="box">
+<h2>Hi, I'm Raihan V 🚀</h2><p style="font-size:12px">Welcome to my official website</p>
+<div style="background:orange;width:50px;height:50px;border-radius:50%;margin:0 auto;line-height:50px;font-weight:bold;color:#fff">R</div>
+<p style="color:green;font-weight:bold">রায়হান Raihan Vai ❤️</p><p style="font-size:11px">raihan0192830@gmail.com</p>
+
+<!-- আপনার আগের বাটন গুলো থাকবে -->
+<button class="btn black">📥 Download My App</button>
+<button class="btn b">Facebook</button>
+<button class="btn r">YouTube</button>
+<button class="btn g">WhatsApp</button>
+
+<!-- নতুন সব ফিচার এখান থেকে শুরু -->
+<div class="card" style="border:2px solid gold;text-align:center">
+<div>🪙 আমার কয়েন</div><div class="coin" id="coin">0</div>
+<div style="background:#ddd;height:10px;border-radius:10px"><div id="bar" style="background:green;height:10px;width:0%"></div></div>
+<p id="wText" style="color:red;font-weight:bold;font-size:13px">Withdraw: OFF</p>
+<button class="btn black" onclick="doWithdraw()">💸 Withdraw করুন</button>
+</div>
+
 <div class="card">
-<h1>Hi, I'm Raihan V 🚀</h1>
-<p>Welcome to my official website</p>
-
-<!-- বাইরের অংশ - Login এর আগে দেখাবে -->
-<div id="outsideContent">
-<button class="btn btn-google" onclick="googleLogin()">🔐 Google দিয়ে Login করুন</button>
-<p style="font-size:14px;color:#666;">ভিতরে ঢুকতে Login করুন</p>
+<h4>📋 কাজ করুন - কয়েন জিতুন</h4>
+<div class="task"><span>ভিডিও দেখুন</span><button onclick="doTask(1,5)">+5</button></div>
+<div class="task"><span>Follow করুন</span><button onclick="doTask(2,10)">+10</button></div>
+<div class="task"><span>Invite করুন</span><button onclick="doTask(3,20)">+20</button></div>
 </div>
 
-<!-- ভিতরের অংশ - Login এর পরে দেখাবে -->
-<div id="insideContent">
-<img id="userPhoto" src="">
-<p id="userInfo" style="color:green;font-weight:bold;margin-top:15px;"></p>
-<p id="userEmail" style="color:#333;"></p>
-<a class="btn" href="#">📥 Download My App</a>
-<a class="btn btn-fb" href="#">Facebook</a>
-<a class="btn btn-yt" href="#">YouTube</a>
-<a class="btn btn-wa" href="#">WhatsApp</a>
-<button class="btn" style="background:#ff3b3b" onclick="googleLogout()">Logout</button>
+<div class="card" style="background:#e8f5e9">
+<h4>🔗 রেফার লিংক</h4>
+<input id="refLink" style="width:90%;padding:8px" readonly>
+<button class="btn g" style="padding:8px" onclick="shareLink()">শেয়ার করুন</button>
+<p style="font-size:12px">আপনার লিংকে জয়েন: <b><span id="refCount">0</span> জন</b></p>
 </div>
 
-<p style="color:#888;font-size:13px;">© 2026 Raihan V</p>
+<div class="card" style="border:1px dashed red">
+<h4>👑 Admin (শুধু আপনি)</h4>
+<input type="password" id="apass" placeholder="01942" style="padding:8px;width:60%"><button onclick="adminLogin()">Login</button>
+<div id="apanel" style="display:none;margin-top:8px">
+<button onclick="setW(true)" style="background:green;color:#fff;padding:8px;border:none;border-radius:5px">Withdraw ON</button>
+<button onclick="setW(false)" style="background:red;color:#fff;padding:8px;border:none;border-radius:5px">Withdraw OFF</button>
+</div>
 </div>
 
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<button class="btn r" style="margin-top:10px">Logout</button>
+<p style="font-size:10px">© 2025 Raihan V</p>
+</div>
 
-const firebaseConfig={apiKey:"AIzaSyCmElkJZ27WNuNUdfCAPdaAYlP183pckZM",authDomain:"raihanv372-7bfaf.firebaseapp.com",projectId:"raihanv372-7bfaf",storageBucket:"raihanv372-7bfaf.firebasestorage.app",messagingSenderId:"795128285256",appId:"1:795128285256:web:136862bbad15bf6651707d"};
-
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const provider=new GoogleAuthProvider();
-
-window.googleLogin=()=>{
-  signInWithPopup(auth,provider).catch(e=>alert(e.message))
-};
-
-window.googleLogout=()=>{
-  signOut(auth);
-};
-
-// এইটা হলো আসল জাদু - Login হলে ভিতরে ঢুকাবে
-onAuthStateChanged(auth, (user)=>{
-  if(user){
-    document.getElementById("outsideContent").style.display="none";
-    document.getElementById("insideContent").style.display="block";
-    document.getElementById("userInfo").innerText="স্বাগতম "+user.displayName+" ❤️";
-    document.getElementById("userEmail").innerText=user.email;
-    document.getElementById("userPhoto").src=user.photoURL;
-  } else {
-    document.getElementById("outsideContent").style.display="block";
-    document.getElementById("insideContent").style.display="none";
-  }
-});
+<script>
+let coin=parseInt(localStorage.getItem('rc_coin')||0);let withdrawON=localStorage.getItem('rc_withdraw')=='true';let myId=localStorage.getItem('rc_id')||'Raihan'+Math.floor(Math.random()*999);localStorage.setItem('rc_id',myId);
+function updateUI(){document.getElementById('coin').innerText=coin;document.getElementById('bar').style.width=Math.min(coin,100)+'%';document.getElementById('refLink').value=location.origin+location.pathname+'?ref='+myId;document.getElementById('refCount').innerText=localStorage.getItem('ref_'+myId)||0;if(withdrawON){document.getElementById('wText').innerText='Withdraw: ON';document.getElementById('wText').style.color='green';}}updateUI();
+function doTask(id,r){if(localStorage.getItem('task_'+id)){alert('করা হয়েছে!');return;}coin+=r;localStorage.setItem('rc_coin',coin);localStorage.setItem('task_'+id,'done');updateUI();alert('+'+r+' কয়েন!');}
+function doWithdraw(){if(!withdrawON){alert('Withdraw OFF আছে! Admin বন্ধ রেখেছে');return;}if(coin<100){alert('100 কয়েন লাগবে');return;}let n=prompt('Nagad Number:');if(n)alert('Request গেছে!');}
+function shareLink(){window.open('https://wa.me/?text='+encodeURIComponent('আয় করুন: '+document.getElementById('refLink').value));}
+function adminLogin(){if(document.getElementById('apass').value=='01942'){document.getElementById('apanel').style.display='block';alert('Welcome Boss!');}else alert('ভুল');}
+function setW(o){localStorage.setItem('rc_withdraw',o);location.reload();}
 </script>
 </body>
 </html>
